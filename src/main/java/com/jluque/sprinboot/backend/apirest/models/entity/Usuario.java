@@ -1,6 +1,7 @@
 package com.jluque.sprinboot.backend.apirest.models.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,8 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "usuarios")
@@ -45,33 +50,16 @@ public class Usuario implements Serializable {
 	uniqueConstraints= {@UniqueConstraint(columnNames= {"usuario_id", "role_id"})})
 	private List<Role> roles;
 	
-	@Column(name = "job_title")
-	private String jobTitle;
-		
-	private String department;
+	@NotNull(message= "No puede ser vacio")
+	@Column(name = "create_at")
+	@Temporal(TemporalType.DATE)
+	private Date createAt;
 	
-	@Column(name ="job_labour")
-	private String jobLabour;
+	@PrePersist
+	public void prePersist() {
+		this.createAt = new Date();
+	}
 	
-	private String country;
-	
-	@Column(name = "address_line")
-	private String addressLine;
-	
-	@Column(name = "address_line_s")
-	private String addressLineS;
-	
-	private String city;
-	
-	private String province;
-	
-	@Column(name = "postal_code")
-	private String postalCode;
-
-//	@JsonIgnoreProperties(value = { "facturas", "hibernateLazyInitializer", "handler" }, allowSetters = true)
-//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "autor")
-//    private List<Publicacion> publicacion;
-    
 	public Long getId() {
 		return id;
 	}
@@ -135,86 +123,15 @@ public class Usuario implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-    
-	public String getJobTitle() {
-		return jobTitle;
+   	
+	public Date getCreateAt() {
+		return createAt;
 	}
 
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
+	public void setCreateAt(Date createAt) {
+		this.createAt = createAt;
 	}
 
-	public String getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
-	}
-
-	public String getJobLabour() {
-		return jobLabour;
-	}
-
-	public void setJobLabour(String jobLabour) {
-		this.jobLabour = jobLabour;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getAddressLine() {
-		return addressLine;
-	}
-
-	public void setAddressLine(String addressLine) {
-		this.addressLine = addressLine;
-	}
-
-	public String getAddressLineS() {
-		return addressLineS;
-	}
-
-	public void setAddressLineS(String addressLineS) {
-		this.addressLineS = addressLineS;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getProvince() {
-		return province;
-	}
-
-	public void setProvince(String province) {
-		this.province = province;
-	}
-
-	public String getPostalCode() {
-		return postalCode;
-	}
-
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
-	
-//	public List<Publicacion> getPublicacion() {
-//		return publicacion;
-//	}
-//
-//	public void setPublicacion(List<Publicacion> publicacion) {
-//		this.publicacion = publicacion;
-//	}
 
 	private static final long serialVersionUID = 1L;
 }

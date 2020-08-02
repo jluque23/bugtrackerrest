@@ -21,10 +21,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/clientes", "/api/clientes/page/**","/api/uploads/img/**","/images/**","/api/productos","/api/usuarios/**","/api/publicaciones","/api/publicaciones/**").permitAll()
-		.antMatchers(HttpMethod.GET,"/api/productos","/api/productos/**").permitAll()
-		.antMatchers(HttpMethod.POST, "/api/productos", "/api/productos/upload","/api/usuarios").permitAll()
-		.antMatchers(HttpMethod.PUT, "/api/productos/**","/api/usuarios/**").permitAll()
+		http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/uploads/img/**","/images/**","/api/productos","/api/usuarios/**","/api/bugs","/api/bugs/**","/api/comentariosbug","/api/comentariosbug/**","/api/notifications").permitAll()
+		.antMatchers(HttpMethod.GET,"/api/bugs","/api/comentariosbug/**").permitAll()
+		.antMatchers(HttpMethod.POST, "/api/usuarios","/api/bugs","/api/comentariosbug","/api/notifications").permitAll()
+		.antMatchers(HttpMethod.PUT, "/api/usuarios/**","/api/bugs/**","/api/bugs/").permitAll()
 		.antMatchers(HttpMethod.DELETE, "/api/usuarios/**").permitAll()
 		/* .antMatchers(HttpMethod.GET, "/api/clientes/{id}").hasAnyRole("USER","ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/clientes/upload").hasAnyRole("USER","ADMIN")

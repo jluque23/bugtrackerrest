@@ -1,23 +1,7 @@
-INSERT INTO regiones (id, nombre) VALUES (1,'Sudamerica');
-INSERT INTO regiones (id, nombre) VALUES (2,'Centroamerica');
-INSERT INTO regiones (id, nombre) VALUES (3,'Norteamerica');
-INSERT INTO regiones (id, nombre) VALUES (4,'Europa');
-INSERT INTO regiones (id, nombre) VALUES (5,'Asia');
-INSERT INTO regiones (id, nombre) VALUES (6,'Africa');
-INSERT INTO regiones (id, nombre) VALUES (7,'Oceania');
-INSERT INTO regiones (id, nombre) VALUES (8,'Antartida');
-
-
-INSERT INTO clientes(region_id,nombre, apellido, email, create_at) VALUES (1,'Naruto','Uzumaki','naruto@hotmail.com','2010-01-01');
-INSERT INTO clientes(region_id,nombre, apellido, email, create_at) VALUES (2,'Roronoa','Zoro','roronoa@hotmail.com','2010-01-02');
-INSERT INTO clientes(region_id,nombre, apellido, email, create_at) VALUES (3,'Linus','Torvalds','linustorvalds@hotmail.com','2010-01-03');
-INSERT INTO clientes(region_id,nombre, apellido, email, create_at) VALUES (4,'Kakashi','Hatake','kakashi@hotmail.com','2010-01-04');
-INSERT INTO clientes(region_id,nombre, apellido, email, create_at) VALUES (5,'Miguel','Cisneros','Miguel@hotmail.com','2010-01-05');
-
 /* creamos algunos usuarios */
 
-INSERT INTO `usuarios` (username, password, enabled, nombre, apellido, email) VALUES ('andres','$2a$10$Zri4Huh6KQHtir0Ud3xClOXQEdIzQ9cbaJf4HupoGFxDHz2Y/Kvp.',1,'Andres','Guzman','profesor@email.com');
-INSERT INTO `usuarios` (username, password, enabled, nombre, apellido, email) VALUES ('admin','$2a$10$h5FDjzfoYpDnKvLi4YalmOOVMPyNyNgzvAWButHx/sX.o20ib9iN.',1,'John','Doe','jhon.doe@email.com');
+INSERT INTO `usuarios` (username, password, enabled, nombre, apellido, email,create_at) VALUES ('andres','$2a$10$Zri4Huh6KQHtir0Ud3xClOXQEdIzQ9cbaJf4HupoGFxDHz2Y/Kvp.',1,'Andres','Guzman','profesor@email.com','2010-01-01');
+INSERT INTO `usuarios` (username, password, enabled, nombre, apellido, email,create_at) VALUES ('admin','$2a$10$h5FDjzfoYpDnKvLi4YalmOOVMPyNyNgzvAWButHx/sX.o20ib9iN.',1,'John','Doe','jhon.doe@email.com','2010-01-01');
 
 INSERT INTO `roles` (nombre) VALUES ('ROLE_USER');
 INSERT INTO `roles` (nombre) VALUES ('ROLE_ADMIN');
@@ -26,22 +10,16 @@ INSERT INTO `usuarios_roles` (usuario_id, role_id) VALUES (1,1);
 INSERT INTO `usuarios_roles` (usuario_id, role_id) VALUES (2,2);
 INSERT INTO `usuarios_roles` (usuario_id, role_id) VALUES (2,1);
 
-/* populate tabla productos */
+/* Creamos bugs */
+insert into bugs (title,create_at,descripcion,usuario_id,enabled) values ('La Monja','2010-01-05','Es una pequeña descripcion',1,1);
+insert into bugs (title,create_at,descripcion,usuario_id,enabled) values ('Error en ventana login','2015-01-05','Error al iniciar un login no funciona',2,0);
 
-INSERT INTO productos (nombre,precio, create_at) VALUES('Panasonic Pantalla LCD', 259990, NOW());
-INSERT INTO productos (nombre,precio, create_at) VALUES('Sony Camara digital DSC-W320B', 123490, NOW());
-INSERT INTO productos (nombre,precio, create_at) VALUES('Apple iPod Shuffle', 1499990, NOW());
-INSERT INTO productos (nombre,precio, create_at) VALUES('Sony Notebook Z110', 37990, NOW());
-INSERT INTO productos (nombre,precio, create_at) VALUES('Hewlett Packard Multifuncional F2280', 69990, NOW());
-INSERT INTO productos (nombre,precio, create_at) VALUES('Bianchi Bicicleta Aro 26', 69990, NOW());
-INSERT INTO productos (nombre,precio, create_at) VALUES('Mica Comoda 5 Cajones', 2999990, NOW());
+/* Creamos comentarios en bugs */
+insert into bug_comentarios(id, comentario, create_at, usuario, bug_id) values (1,'Verificare el bug de inmediato','2010-01-05','Andres Guzman','1');
+insert into bug_comentarios(id, comentario, create_at, usuario, bug_id) values (2,'Verificare el bug de inmediato','2010-01-05','John Doe','1');
+insert into bug_comentarios(id, comentario, create_at, usuario, bug_id) values (3,'Verificalo bien porfavor','2010-01-05','Jesus Luque','1');
+insert into bug_comentarios(id, comentario, create_at, usuario, bug_id) values (4,'Tremenda Porqueria','2010-01-05','Francisco Di Asis','1');
 
-/* creamos facturas */
-INSERT INTO facturas (descripcion, observacion, cliente_id, create_at) VALUES ('Factura equipos de oficina', null, 1, NOW());
-INSERT INTO facturas_items(cantidad, factura_id, producto_id) VALUES (1,1,1);
-INSERT INTO facturas_items(cantidad, factura_id, producto_id) VALUES (2,1,4);
-INSERT INTO facturas_items(cantidad, factura_id, producto_id) VALUES (1,1,5);
-INSERT INTO facturas_items(cantidad, factura_id, producto_id) VALUES (1,1,7);
-
-INSERT INTO facturas (descripcion, observacion, cliente_id, create_at) VALUES ('Factura bicicleta', 'Alguna nota importante', 1, NOW());
-INSERT INTO facturas_items(cantidad, factura_id, producto_id) VALUES (3,2,6);
+/* creamos notificationes */
+insert into notifications (id,create_at,description) values (1,'2020/10/10','una nueva notification se ha creado');
+insert into notifications (id,create_at,description) values (2,now(),'segunda notification');
