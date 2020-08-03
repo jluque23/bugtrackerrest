@@ -85,9 +85,15 @@ public class UsuarioServiceImpl implements IUsuarioService, UserDetailsService {
 	}
 
 	@Override
-	@Transactional()
+	@Transactional
 	public void insertUsuarioRol(Usuario usuario) {
 		usuarioDao.insertUsuariosRol(usuario.getId());
+	}
+	
+	@Override
+	@Transactional
+	public void insertUsuariosRolAdmin(Usuario usuario) {
+		usuarioDao.insertUsuariosRolAdmin(usuario.getId());
 	}
 
 }

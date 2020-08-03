@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jluque.sprinboot.backend.apirest.models.entity.Notification;
 import com.jluque.sprinboot.backend.apirest.models.entity.Usuario;
 import com.jluque.sprinboot.backend.apirest.models.services.IUsuarioService;
 
@@ -146,7 +148,33 @@ public class UsuarioRestController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
+	
+//	@PostMapping("/usuarios/makeadmin")
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public void makeUserAdmin(@RequestBody Usuario usuario) {
+//		usuarioService.insertUsuariosRolAdmin(usuario);
+//	}
 
+	@PostMapping("/usuarios/makeadmin")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<?> makeUserAdmin(@RequestBody Usuario usuario) {
+
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+			usuarioService.insertUsuariosRolAdmin(usuario);
+			
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar el insert en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "The user has been updated to an admin user succesfully!");
+		response.put("usuario", usuario);
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+	}
+		
 	// @Secured({"ROLE_ADMIN"})
 	@PutMapping("/usuarios/change-password/{id}")
 	public ResponseEntity<?> updatePassword(@RequestBody Usuario usuario, @PathVariable Long id) {
@@ -177,6 +205,7 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
+	
 	// @Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/usuarios/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
@@ -193,4 +222,6 @@ public class UsuarioRestController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
+	
+	
 }

@@ -22,4 +22,6 @@ public interface IUsuarioService {
 	public void delete(Long id);
 	
 	public void insertUsuarioRol(Usuario usuario);
+	
+	public void insertUsuariosRolAdmin(Usuario usuario);
 }
