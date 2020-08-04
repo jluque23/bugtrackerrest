@@ -55,6 +55,9 @@ public class Usuario implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
 	
+	@Column(name = "foto")
+	private String foto;
+	
 	@PrePersist
 	public void prePersist() {
 		this.createAt = new Date();
@@ -131,7 +134,14 @@ public class Usuario implements Serializable {
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
+	
+	public String getFoto() {
+		return foto;
+	}
 
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 
 	private static final long serialVersionUID = 1L;
 }

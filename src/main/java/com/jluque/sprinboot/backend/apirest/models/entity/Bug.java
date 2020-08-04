@@ -49,6 +49,9 @@ public class Bug implements Serializable{
 	
 	private boolean enabled;
 	
+	@Column(name = "foto")
+	private String foto;
+	
 	public Bug() {
 		comentarioBug = new ArrayList<>();
 	}
@@ -114,6 +117,13 @@ public class Bug implements Serializable{
 		this.enabled = enabled;
 	}
 
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 
 
 	/**

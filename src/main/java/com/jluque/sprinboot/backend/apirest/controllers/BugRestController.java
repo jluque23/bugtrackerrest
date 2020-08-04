@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jluque.sprinboot.backend.apirest.models.entity.Bug;
 import com.jluque.sprinboot.backend.apirest.models.services.IBugService;
+import com.jluque.sprinboot.backend.apirest.models.services.IUploadFileService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
@@ -35,6 +36,9 @@ public class BugRestController {
 
 	@Autowired
 	private IBugService bugService;
+	
+	@Autowired
+	private IUploadFileService uploadService;
 	
 	@GetMapping("/bugs")
 	@ResponseStatus(HttpStatus.OK)
@@ -62,6 +66,38 @@ public class BugRestController {
 	public Bug crear(@RequestBody Bug bug) {
 		bug.setEnabled(true);
 		return bugService.save(bug);
+	}
+
+	@PostMapping("/bugs/upload")
+	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
+		Map<String, Object> response = new HashMap<>();
+
+		Bug bug = bugService.findById(id);
+
+		if (!archivo.isEmpty()) {
+
+			String nombreArchivo = null;
+
+			try {
+				nombreArchivo = uploadService.copiar(archivo);
+			} catch (IOException e) {
+				response.put("mensaje", "Error al subir la imagen del bug");
+				response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
+			String nombreFotoAnterior = bug.getFoto();
+
+			uploadService.eliminar(nombreFotoAnterior);
+
+			bug.setFoto(nombreArchivo);
+
+			bugService.save(bug);
+
+			response.put("bug", bug);
+			response.put("mensaje", "Has subido correctamente la imagen: " + nombreArchivo);
+		}
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
 //	@Secured({"ROLE_ADMIN"})
