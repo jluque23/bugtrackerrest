@@ -31,7 +31,8 @@ import com.jluque.sprinboot.backend.apirest.models.entity.Usuario;
 import com.jluque.sprinboot.backend.apirest.models.services.IUploadFileService;
 import com.jluque.sprinboot.backend.apirest.models.services.IUsuarioService;
 
-@CrossOrigin(origins = { "http://localhost:4200", "*" })
+//@CrossOrigin(origins = { "http://localhost:4200","http://localhost:5000", "*" })
+@CrossOrigin()
 @RestController
 @RequestMapping("/api")
 public class UsuarioRestController {

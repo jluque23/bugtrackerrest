@@ -29,7 +29,8 @@ import com.jluque.sprinboot.backend.apirest.models.entity.Bug;
 import com.jluque.sprinboot.backend.apirest.models.services.IBugService;
 import com.jluque.sprinboot.backend.apirest.models.services.IUploadFileService;
 
-@CrossOrigin(origins = { "http://localhost:4200", "*" })
+//@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5000", "*" })
+@CrossOrigin()
 @RestController
 @RequestMapping("/api")
 public class BugRestController {
