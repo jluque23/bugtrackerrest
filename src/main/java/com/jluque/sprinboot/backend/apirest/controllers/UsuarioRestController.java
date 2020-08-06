@@ -31,7 +31,7 @@ import com.jluque.sprinboot.backend.apirest.models.entity.Usuario;
 import com.jluque.sprinboot.backend.apirest.models.services.IUploadFileService;
 import com.jluque.sprinboot.backend.apirest.models.services.IUsuarioService;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = { "http://localhost:4200", "*" })
 @RestController
 @RequestMapping("/api")
 public class UsuarioRestController {
@@ -121,7 +121,7 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
+	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 	@PostMapping("/usuarios/upload")
 	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
 		Map<String, Object> response = new HashMap<>();
@@ -154,7 +154,7 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	@Secured({"ROLE_ADMIN"})
+	@Secured({ "ROLE_ADMIN" })
 	@PostMapping("/usuarios/makeadmin")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> makeUserAdmin(@RequestBody Usuario usuario) {
@@ -175,7 +175,7 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
+	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 	@PutMapping("/usuarios/{id}")
 	public ResponseEntity<?> update(@RequestBody Usuario usuario, @PathVariable Long id) {
 		Usuario usuarioActual = usuarioService.findById(id);
@@ -210,7 +210,7 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	@Secured({"ROLE_ADMIN"})
+	@Secured({ "ROLE_ADMIN" })
 	@PutMapping("/usuarios/change-password/{id}")
 	public ResponseEntity<?> updatePassword(@RequestBody Usuario usuario, @PathVariable Long id) {
 		Usuario usuarioActual = usuarioService.findById(id);
@@ -240,7 +240,7 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	@Secured({"ROLE_ADMIN"})
+	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping("/usuarios/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		Map<String, Object> response = new HashMap<>();

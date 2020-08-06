@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jluque.sprinboot.backend.apirest.models.entity.BugComentario;
 import com.jluque.sprinboot.backend.apirest.models.services.IBugComentarioService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200", "*" })
 @RestController
 @RequestMapping("/api")
 public class BugComentarioRestController {
@@ -25,14 +25,14 @@ public class BugComentarioRestController {
 	@Autowired
 	private IBugComentarioService comentarioBugService;
 
-	@Secured({"ROLE_USER"})
+	@Secured({ "ROLE_USER" })
 	@PostMapping("/comentariosbug")
 	@ResponseStatus(HttpStatus.CREATED)
 	public BugComentario crear(@RequestBody BugComentario bugComentario) {
 		return comentarioBugService.save(bugComentario);
 	}
-	
-	@Secured({"ROLE_USER"})
+
+	@Secured({ "ROLE_USER" })
 	@GetMapping("/comentariosbug/{bugId}")
 	public List<BugComentario> index(@PathVariable Long bugId) {
 		return comentarioBugService.findByBugId(bugId);

@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jluque.sprinboot.backend.apirest.models.services.IUploadFileService;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = { "http://localhost:4200", "*" })
 @RestController
 @RequestMapping("/api")
 public class ImageRestController {
-	
+
 	@Autowired
 	private IUploadFileService uploadService;
-	
+
 	@GetMapping("/uploads/img/{nombreFoto:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
 
@@ -33,11 +33,11 @@ public class ImageRestController {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		
+
 		HttpHeaders cabecera = new HttpHeaders();
 		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
 
 		return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
 	}
-	
+
 }

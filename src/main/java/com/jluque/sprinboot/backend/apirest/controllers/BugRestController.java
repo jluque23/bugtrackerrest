@@ -29,44 +29,44 @@ import com.jluque.sprinboot.backend.apirest.models.entity.Bug;
 import com.jluque.sprinboot.backend.apirest.models.services.IBugService;
 import com.jluque.sprinboot.backend.apirest.models.services.IUploadFileService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200", "*" })
 @RestController
 @RequestMapping("/api")
 public class BugRestController {
 
 	@Autowired
 	private IBugService bugService;
-	
+
 	@Autowired
 	private IUploadFileService uploadService;
-	
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
+
+	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 	@GetMapping("/bugs")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Bug> index(){
+	public List<Bug> index() {
 		return bugService.findAll();
 	}
-	
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
+
+	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 	@GetMapping("/bugs/page/{page}")
 	@ResponseStatus(HttpStatus.OK)
-	public Page<Bug> index(@PathVariable Integer page){
+	public Page<Bug> index(@PathVariable Integer page) {
 		Pageable pageable = PageRequest.of(page, 32);
 		return bugService.findAll(pageable);
 	}
-	
+
 //	@Secured({"ROLE_ADMIN","ROLE_USER"})
 //	@GetMapping("/bugs/{id}")
 //	@ResponseStatus(HttpStatus.OK)
 //	public Bug show(@PathVariable Long id) {
 //		return bugService.findById(id);
 //	}
-	
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
+
+	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 	@GetMapping("/bugs/{id}")
 	public ResponseEntity<?> show(@PathVariable Long id) {
 		Bug bug = null;
-		
+
 		Map<String, Object> response = new HashMap<>();
 
 		try {
@@ -85,7 +85,7 @@ public class BugRestController {
 		return new ResponseEntity<Bug>(bug, HttpStatus.OK);
 	}
 
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
+	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 	@PostMapping("/bugs")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Bug crear(@RequestBody Bug bug) {
@@ -93,7 +93,7 @@ public class BugRestController {
 		return bugService.save(bug);
 	}
 
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
+	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 	@PostMapping("/bugs/upload")
 	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
 		Map<String, Object> response = new HashMap<>();
@@ -125,13 +125,13 @@ public class BugRestController {
 		}
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@PutMapping("/bugs/{id}")
 	public ResponseEntity<?> update(@RequestBody Bug bug, @PathVariable Long id) {
 		Bug bugActual = bugService.findById(id);
 		Bug bugUpdated = null;
-		
+
 		Map<String, Object> response = new HashMap<>();
 
 		if (bugActual == null) {
@@ -144,7 +144,7 @@ public class BugRestController {
 			bugActual.setEnabled(bug.isEnabled());
 			bugActual.setDescripcion(bug.getDescripcion());
 			bugActual.setTitle(bug.getTitle());
-			
+
 			bugUpdated = bugService.save(bugActual);
 
 		} catch (DataAccessException e) {

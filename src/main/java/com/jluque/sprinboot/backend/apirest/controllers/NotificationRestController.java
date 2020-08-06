@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jluque.sprinboot.backend.apirest.models.entity.Notification;
 import com.jluque.sprinboot.backend.apirest.models.services.INotificationService;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = { "http://localhost:4200", "*" })
 @RestController
 @RequestMapping("/api")
 public class NotificationRestController {
@@ -24,13 +24,13 @@ public class NotificationRestController {
 	@Autowired
 	private INotificationService notificationService;
 
-	@Secured({"ROLE_ADMIN"})
+	@Secured({ "ROLE_ADMIN" })
 	@GetMapping("/notifications")
 	public List<Notification> index() {
 		return notificationService.findAll();
 	}
 
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
+	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 	@PostMapping("/notifications")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Notification create(@RequestBody Notification notification) {
