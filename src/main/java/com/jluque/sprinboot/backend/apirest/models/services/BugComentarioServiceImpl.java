@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jluque.sprinboot.backend.apirest.models.dao.IBugComentarioDao;
-import com.jluque.sprinboot.backend.apirest.models.entity.Bug;
 import com.jluque.sprinboot.backend.apirest.models.entity.BugComentario;
 
 @Service

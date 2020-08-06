@@ -58,6 +58,10 @@ public class Usuario implements Serializable {
 	@Column(name = "foto")
 	private String foto;
 	
+	public Usuario() {
+		
+	}
+	
 	@PrePersist
 	public void prePersist() {
 		this.createAt = new Date();

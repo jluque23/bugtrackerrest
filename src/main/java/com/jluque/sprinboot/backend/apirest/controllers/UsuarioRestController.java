@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jluque.sprinboot.backend.apirest.models.entity.Notification;
 import com.jluque.sprinboot.backend.apirest.models.entity.Usuario;
 import com.jluque.sprinboot.backend.apirest.models.services.IUploadFileService;
 import com.jluque.sprinboot.backend.apirest.models.services.IUsuarioService;
