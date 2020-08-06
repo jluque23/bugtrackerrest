@@ -122,7 +122,7 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
-//	@Secured({ "ROLE_ADMIN" })
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@PostMapping("/usuarios/upload")
 	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
 		Map<String, Object> response = new HashMap<>();
@@ -155,12 +155,7 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-//	@PostMapping("/usuarios/makeadmin")
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public void makeUserAdmin(@RequestBody Usuario usuario) {
-//		usuarioService.insertUsuariosRolAdmin(usuario);
-//	}
-
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/usuarios/makeadmin")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> makeUserAdmin(@RequestBody Usuario usuario) {
@@ -181,7 +176,7 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
-	// @Secured({"ROLE_ADMIN"})
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@PutMapping("/usuarios/{id}")
 	public ResponseEntity<?> update(@RequestBody Usuario usuario, @PathVariable Long id) {
 		Usuario usuarioActual = usuarioService.findById(id);
@@ -216,7 +211,7 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	// @Secured({"ROLE_ADMIN"})
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/usuarios/change-password/{id}")
 	public ResponseEntity<?> updatePassword(@RequestBody Usuario usuario, @PathVariable Long id) {
 		Usuario usuarioActual = usuarioService.findById(id);
@@ -246,7 +241,7 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	// @Secured({"ROLE_ADMIN"})
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/usuarios/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		Map<String, Object> response = new HashMap<>();

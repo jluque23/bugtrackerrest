@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,13 +30,14 @@ public class BugComentarioRestController {
 	@Autowired
 	private IBugComentarioService comentarioBugService;
 
-//	@Secured({"ROLE_ADMIN"})
+	@Secured({"ROLE_USER"})
 	@PostMapping("/comentariosbug")
 	@ResponseStatus(HttpStatus.CREATED)
 	public BugComentario crear(@RequestBody BugComentario bugComentario) {
 		return comentarioBugService.save(bugComentario);
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/comentariosbug/{bugId}")
 	public List<BugComentario> index(@PathVariable Long bugId) {
 		return comentarioBugService.findByBugId(bugId);

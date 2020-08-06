@@ -40,12 +40,14 @@ public class BugRestController {
 	@Autowired
 	private IUploadFileService uploadService;
 	
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@GetMapping("/bugs")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Bug> index(){
 		return bugService.findAll();
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@GetMapping("/bugs/page/{page}")
 	@ResponseStatus(HttpStatus.OK)
 	public Page<Bug> index(@PathVariable Integer page){
@@ -54,13 +56,36 @@ public class BugRestController {
 	}
 	
 //	@Secured({"ROLE_ADMIN","ROLE_USER"})
+//	@GetMapping("/bugs/{id}")
+//	@ResponseStatus(HttpStatus.OK)
+//	public Bug show(@PathVariable Long id) {
+//		return bugService.findById(id);
+//	}
+	
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@GetMapping("/bugs/{id}")
-	@ResponseStatus(HttpStatus.OK)
-	public Bug show(@PathVariable Long id) {
-		return bugService.findById(id);
+	public ResponseEntity<?> show(@PathVariable Long id) {
+		Bug bug = null;
+		
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+			bug = bugService.findById(id);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		if (bug == null) {
+			response.put("mensaje", "El Bug ID: ".concat(id.toString().concat(" no existe en la base de datos")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<Bug>(bug, HttpStatus.OK);
 	}
 
-//	@Secured({"ROLE_ADMIN"})
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@PostMapping("/bugs")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Bug crear(@RequestBody Bug bug) {
@@ -68,6 +93,7 @@ public class BugRestController {
 		return bugService.save(bug);
 	}
 
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@PostMapping("/bugs/upload")
 	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
 		Map<String, Object> response = new HashMap<>();
@@ -100,7 +126,7 @@ public class BugRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
-//	@Secured({"ROLE_ADMIN"})
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/bugs/{id}")
 	public ResponseEntity<?> update(@RequestBody Bug bug, @PathVariable Long id) {
 		Bug bugActual = bugService.findById(id);

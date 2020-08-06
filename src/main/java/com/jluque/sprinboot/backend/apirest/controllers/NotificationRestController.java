@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,12 +26,13 @@ public class NotificationRestController {
 	@Autowired
 	private INotificationService notificationService;
 
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/notifications")
 	public List<Notification> index() {
 		return notificationService.findAll();
 	}
 
-//	@Secured({"ROLE_ADMIN"})
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@PostMapping("/notifications")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Notification create(@RequestBody Notification notification) {
