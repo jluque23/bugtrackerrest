@@ -31,7 +31,6 @@ public class NotificationRestController {
 		return notificationService.findAll();
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 	@PostMapping("/notifications")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Notification create(@RequestBody Notification notification) {
